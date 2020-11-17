@@ -55,7 +55,7 @@ Lo probamos con las entradas siguientes:
 ```
 
 Y si mostramos la tabla vemos que funciona correctamente
-![alt_text]()  
+![alt_text](https://github.com/alu0101133201/triggers_adbd/blob/main/images/email.png)  
 
 ### 2. Crear un trigger permita verificar que las personas en el Municipio del catastro no pueden vivir en dos viviendas diferentes.
 
@@ -82,7 +82,7 @@ Si probamos a introducir una persona que vive en dos viviendas vemos que salta u
 ```sql
    INSERT INTO Persona VALUES ('pepe', 5555, null, null, 'A', 3, 'Viana', 0, 0, 'Anchieta', null);
 ```
-![alt_text]()  
+![alt_text](https://github.com/alu0101133201/triggers_adbd/blob/main/images/errorViviendas.png)  
 
 ### 3. Crear el o los trigger que permitan mantener actualizado el stock de la base de dato de viveros.
 
@@ -106,7 +106,7 @@ También se comprueba que queden elementos de los que se piden. Si no es así, s
 ```
 Con esta situación inicial, donde tenemos dos productos de los cuales uno está agotado, vamos a hacer las pruebas.  
 
-![alt_text]()  
+![alt_text](https://github.com/alu0101133201/triggers_adbd/blob/main/images/inicial.png)  
 
 Realizamos las siguientes acciones. Retiramos un elemento del que existe stock, y otro del que está agotado  
 
@@ -116,11 +116,11 @@ Realizamos las siguientes acciones. Retiramos un elemento del que existe stock, 
 ```
 Como suponíamos, la segunda consulta da error  
 
-![alt_text]()
+![alt_text](https://github.com/alu0101133201/triggers_adbd/blob/main/images/errorViviendas.png)
 
 Y la tabla finalmente queda como se muestra en la imagen
 
-![alt_text]()
+![alt_text](https://github.com/alu0101133201/triggers_adbd/blob/main/images/situacionFinal.png)
 
 
 
