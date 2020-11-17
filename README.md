@@ -54,7 +54,8 @@ Lo probamos con las entradas siguientes:
    INSERT INTO Cliente VALUES (2222, 0, 2, 'test@gmail.com');
 ```
 
-Y si mostramos la tabla vemos que funciona correctamente
+Y si mostramos la tabla vemos que funciona correctamente  
+
 ![alt_text](https://github.com/alu0101133201/triggers_adbd/blob/main/images/email.png)  
 
 ### 2. Crear un trigger permita verificar que las personas en el Municipio del catastro no pueden vivir en dos viviendas diferentes.
