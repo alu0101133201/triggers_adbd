@@ -117,7 +117,7 @@ Realizamos las siguientes acciones. Retiramos un elemento del que existe stock, 
 ```
 Como suponíamos, la segunda consulta da error  
 
-![alt_text](https://github.com/alu0101133201/triggers_adbd/blob/main/images/errorViviendas.png)
+![alt_text](https://github.com/alu0101133201/triggers_adbd/blob/main/images/errorStock.png)
 
 Y la tabla finalmente queda como se muestra en la imagen
 
