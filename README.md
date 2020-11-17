@@ -63,8 +63,26 @@ Esto nos impediría no introducir una fila errónea. Pero sí se podría introdu
   
 ### 3. Crear el o los trigger que permitan mantener actualizado el stock de la base de dato de viveros.
 
+Para mantener actualizado el stock de la base de datos, debemos controla cuándo se hace un pedido.  
+Un pedido tendrá diferentes productos, que se verán reflejados como inserciones en al tabla que relaciona Pedidos y Productos (pedido_has_Producto).  
+Por tanto añadimos un trigger a esta tabla, y cuando se intente insertar datos, reducimos la cantidad de stock del producto en la tabla Productos. Esto lo 
+realizamos mediante un UPDATE.  
+También se comprueba que queden elementos de los que se piden. Si no es así, se muestra un error avisando de que no hay producto en stock.
 
-
+```sql
+  CREATE DEFINER=`sergio`@`localhost` TRIGGER `viveros`.`Reducir_Stock` BEFORE INSERT ON `Pedido_has_Producto` FOR EACH ROW
+  BEGIN
+   SET @nuevoStock = (SELECT Stock FROM Producto WHERE codigo = NEW.codigoProducto);
+      SET @nuevoStock = (@nuevoStock - NEW.Cantidad);
+      IF @nuevoStock < 0 THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No hay producto en stock para realizar el pedido';
+   ELSE 
+    UPDATE Producto SET Stock = @nuevoStock WHERE codigo = NEW.codigoProducto;
+   END IF;
+  END
+```
+  
+  
 
 
 
