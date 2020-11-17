@@ -19,7 +19,14 @@ Para este primer punto, se crea el siguiente procedimiento
   
 Como vemos, este sencillo código concatena el dni del cliente, con un arroba y un dominio que recibe como parámetro.  
 Al ser un trigger, no hay ningún valor que devolver así que uno de los parámetros está definido como salida. Colocamos el
-email ahí y desde el exterior se podrá acceder a el.
+email ahí y desde el exterior se podrá acceder a el.  
+
+Si lo probamos obtenemos un resultado correcto. Ante la entrada siguiente:  
+```sql
+  CALL crear_email(11111, 'gmail.com', @email);
+  select @email;
+```  
+Obtenemos el email 11111@gmail.com, guardado en la variable @email.
 
 ### Una vez creada la tabla escriba un trigger con las siguientes características:
   -Trigger: trigger_crear_email_before_insert
@@ -35,11 +42,20 @@ procedimiento del punto anterior y se asigna.
   CREATE DEFINER=`sergio`@`localhost` TRIGGER `viveros`.`trigger_crear_email_before_insert` BEFORE INSERT ON `Cliente` FOR EACH ROW
   BEGIN
    if NEW.email  IS NULL THEN
-       CALL crear_email(NEW.DNI, 'gmail.com', @email);
+    CALL crear_email(NEW.DNI, 'gmail.com', @email);
     SET NEW.email = @email;
    END IF;
   END
 ```    
+  
+Lo probamos con las entradas siguientes:  
+```sql  
+   INSERT INTO Cliente VALUES (51151151, 00000000, 1, null);
+   INSERT INTO Cliente VALUES (2222, 0, 2, 'test@gmail.com');
+```
+
+Y si mostramos la tabla vemos que funciona correctamente
+![alt_text]()  
 
 ### 2. Crear un trigger permita verificar que las personas en el Municipio del catastro no pueden vivir en dos viviendas diferentes.
 
@@ -59,8 +75,15 @@ En mi caso, un piso se identifica con cuatro valores y una vivienda unifamiliar 
    END IF;
   END
 ```  
-Esto nos impediría no introducir una fila errónea. Pero sí se podría introducir este error mediante una actualización, por tanto creamos un trigger similar pero que se ejecute antes de cada actualización, completando así la verificación pedida.  
-  
+Esto nos impediría no introducir una fila errónea. Pero sí se podría introducir este error mediante una actualización, por tanto creamos un trigger similar pero que se ejecute antes de cada actualización, completando así la verificación pedida.   
+
+Si probamos a introducir una persona que vive en dos viviendas vemos que salta un error.  
+
+```sql
+   INSERT INTO Persona VALUES ('pepe', 5555, null, null, 'A', 3, 'Viana', 0, 0, 'Anchieta', null);
+```
+![alt_text]()  
+
 ### 3. Crear el o los trigger que permitan mantener actualizado el stock de la base de dato de viveros.
 
 Para mantener actualizado el stock de la base de datos, debemos controla cuándo se hace un pedido.  
@@ -81,8 +104,23 @@ También se comprueba que queden elementos de los que se piden. Si no es así, s
    END IF;
   END
 ```
-  
-  
+Con esta situación inicial, donde tenemos dos productos de los cuales uno está agotado, vamos a hacer las pruebas.  
+
+![alt_text]()  
+
+Realizamos las siguientes acciones. Retiramos un elemento del que existe stock, y otro del que está agotado  
+
+```sql
+   INSERT INTO Pedido_has_Producto VALUES(5, 1, 1);
+   INSERT INTO Pedido_has_Producto VALUES(6, 2, 1);
+```
+Como suponíamos, la segunda consulta da error  
+
+![alt_text]()
+
+Y la tabla finalmente queda como se muestra en la imagen
+
+![alt_text]()
 
 
 
